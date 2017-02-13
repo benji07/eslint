@@ -156,20 +156,20 @@ describe("SourceCode", () => {
                 sourceCode = new SourceCode(SHEBANG_TEST_CODE, ast);
             });
 
-            it("it should change the type of the first comment to \"Shebang\"", () => {
+            it("should change the type of the first comment to \"Shebang\"", () => {
                 const firstToken = sourceCode.getAllComments()[0];
 
-                assert.deepEqual(firstToken.type, "Shebang");
+                assert.equal(firstToken.type, "Shebang");
             });
         });
 
         describe("when a text does not have a shebang", () => {
-            it("it should not change the type of the first comment", () => {
+            it("should not change the type of the first comment", () => {
                 const ast = { comments: [{ type: "Line", value: "comment", range: [0, 9] }], tokens: [], loc: {}, range: [] };
                 const sourceCode = new SourceCode("//comment\nconsole.log('hello');", ast);
                 const firstToken = sourceCode.getAllComments()[0];
 
-                assert.deepEqual(firstToken.type, "Line");
+                assert.equal(firstToken.type, "Line");
             });
         });
 
@@ -954,7 +954,7 @@ describe("SourceCode", () => {
         it("should return comments within a conditional", () => {
             const code = [
                 "/* Leading comment for IfStatement */",
-                "if (/* Leading comment for Identifier */  a) {}"
+                "if (/* Leading comment for Identifier */ a) {}"
             ].join("\n");
 
             eslint.reset();
@@ -1363,7 +1363,7 @@ describe("SourceCode", () => {
             eslint.verify(code, config, "", true);
         });
 
-        it("should return trailing comments if the code only contains comments", () => {
+        it("should return leading comments if the code only contains comments", () => {
             const code = [
                 "//comment",
                 "/*another comment*/"
